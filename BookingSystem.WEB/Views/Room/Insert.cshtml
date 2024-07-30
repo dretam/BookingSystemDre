@@ -1,0 +1,65 @@
+﻿@using BookingSystem.DTO.Master.Room
+@model InsertRoomDTO
+
+@section breadCrumbs {
+    <span>Room Insert Form</span>
+}
+
+@{
+    ViewData["Menu"] = "Insert Room";
+}
+
+<div class="form-bread-crumb">
+    <span>@ViewData["Menu"]</span>
+</div>
+
+<form method="post" asp-action="Insert" class="upsert-form">
+    <table>
+        <tbody>
+            <tr>
+                <td>Room Name*</td>
+                <td>
+                    <input asp-for="Name" />
+                    <span asp-validation-for="Name"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>Location*</td>
+                <td>
+                    <select asp-for="LocationId"
+                            asp-items="@(new SelectList(Model.locationList, "Value", "Text"))"></select>
+                    <span asp-validation-for="LocationId"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>Room Floor*</td>
+                <td>
+                    <input asp-for="Floor" />
+                    <span asp-validation-for="Floor"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>Room Description*</td>
+                <td>
+                    <input asp-for="Description" />
+                    <span asp-validation-for="Description"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>Room Capacity*</td>
+                <td>
+                    <input asp-for="Capacity" />
+                    <span asp-validation-for="Capacity"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>Room Color*</td>
+                <td>
+                    <input type="color" asp-for="Color" />
+                    <span asp-validation-for="Color"></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button class="blue-button" type="submit">Submit</button>
+</form>

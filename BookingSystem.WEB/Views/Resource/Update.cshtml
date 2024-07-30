@@ -1,0 +1,82 @@
+﻿@using BookingSystem.DTO.Master.ResourceDTO
+@model UpdateResourceDTO
+
+@section breadCrumbs {
+    <span>Resource Update Form</span>
+}
+
+@{
+    ViewData["Menu"] = "Update Resource";
+}
+
+<div class="form-bread-crumb">
+    <span>@ViewData["Menu"]</span>
+</div>
+
+<form method="post" asp-action="Update" class="upsert-form">
+    <table>
+        <tbody>
+            @if (Model.Id > 0)
+            {
+                <input type="hidden" asp-for="Id" />
+            }
+            <tr>
+                <td>Resource Name*</td>
+                <td>
+                    <input asp-for="ResourceName" />
+                    <span asp-validation-for="ResourceName"></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="child-resource-code">
+                    <span>
+                        Resource Codes
+                    </span>
+                </td>
+                <td>
+                    <div class="child-container grid-container">
+                        <a class="blue-button create-button" asp-action="InsertChild" asp-route-resourceId="@Model.Id">Add New Code</a>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Action</th>
+                                    <th>Resource Code</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var row in Model.ResourceChildren)
+                                {
+                                    <tr>
+                                        <td>
+                                            <a class="blue-button" asp-action="UpdateChild" asp-route-resourceId="@Model.Id" asp-route-resourceCode="@row.ResourceCode"><i class="far fa-edit"></i></a>
+                                            <a class="blue-button delete-button" asp-action="DeleteChild" data-id="@Model.Id" asp-route-resourceId="@row.ResourceId" asp-route-resourceCode="@row.ResourceCode"><i class="far fa-window-close"></i></a>
+                                        </td>
+                                        <td>@(row.ResourceCode == null ? "-" : row.ResourceCode)</td>
+                                        <td>@(row.Status == null ? "-" : (row.Status == true ? "Available" : "Used"))</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>Icon*</td>
+                <td>
+                    <input asp-for="IconPath" />
+                    <span asp-validation-for="IconPath"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input class="form-check-input" type="checkbox" id="status" asp-for="Status" value="true" checked />
+                    <label class="form-check-label" for="status">
+                        Status*
+                    </label>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button class="blue-button" type="submit">Submit</button>
+</form>

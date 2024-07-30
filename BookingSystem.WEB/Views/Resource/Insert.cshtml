@@ -1,0 +1,50 @@
+﻿@using BookingSystem.DTO.Master.ResourceDTO
+@model InsertResourceDTO
+
+@section breadCrumbs {
+    <span>Resource Insert Form</span>
+}
+
+@{
+    ViewData["Menu"] = "Insert Resource";
+    var columnChildHead = new string[] { "Resource Code", "Master Resource ID", "Status" };
+}
+
+<div class="form-bread-crumb">
+    <span>@ViewData["Menu"]</span>
+</div>
+
+<form method="post" asp-action="Insert" class="upsert-form">
+    <table>
+        <tbody>
+            @if (Model.Id > 0)
+            {
+                <input type="hidden" asp-for="Id" />
+            }
+            <input type="hidden" asp-for="ResourceChildren" />
+            <tr>
+                <td>Resource Name*</td>
+                <td>
+                    <input asp-for="ResourceName" />
+                    <span asp-validation-for="ResourceName"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>Icon*</td>
+                <td>
+                    <input asp-for="IconPath" />
+                    <span asp-validation-for="IconPath"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input class="form-check-input" type="checkbox" id="status" asp-for="Status" value="true" checked />
+                    <label class="form-check-label" for="status">
+                        Status*
+                    </label>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button class="blue-button" type="submit">Submit</button>
+</form>

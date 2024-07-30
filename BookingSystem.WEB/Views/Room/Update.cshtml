@@ -1,0 +1,104 @@
+﻿@using BookingSystem.DTO.Master.Room
+@model UpdateRoomDTO
+
+@section breadCrumbs {
+    <span>Room Update Form</span>
+}
+
+@{
+    ViewData["Menu"] = "Update Room";
+}
+
+<div class="form-bread-crumb">
+    <span>@ViewData["Menu"]</span>
+</div>
+
+<form method="post" asp-action="Update" class="upsert-form">
+    <table>
+        <tbody>
+            <input asp-for="Id" type="hidden" />
+            <tr>
+                <td>Room Name*</td>
+                <td>
+                    <input asp-for="Name" />
+                    <span asp-validation-for="Name"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>Location*</td>
+                <td>
+                    <select asp-for="LocationId"
+                            asp-items="@(new SelectList(Model.locationList, "Value", "Text"))"></select>
+                    <span asp-validation-for="LocationId"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>Resources*</td>
+                <td>
+                    <div class="child-container grid-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Action</th>
+                                    <th>Resource Code</th>
+                                    <th>Resource Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (int i = 0; i < Model.returnCheckedResourceList.Count; i++)
+                                {
+                                    <tr>
+                                        <td>
+                                            @if (Model.returnCheckedResourceList[i].IsChecked == true)
+                                            {
+                                                <input class="form-check-input" type="checkbox" id="isChecked" asp-for="@(Model.returnCheckedResourceList[i].IsChecked)" value="true" checked />
+                                            } else
+                                            {
+                                                <input class="form-check-input" type="checkbox" id="isChecked" asp-for="@(Model.returnCheckedResourceList[i].IsChecked)" value="false" />
+                                            }
+                                        </td>
+                                        <td>
+                                            @Model.returnCheckedResourceList[i].Value
+                                        </td>
+                                        <td>
+                                            @Model.returnCheckedResourceList[i].Text
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>Room Floor*</td>
+                <td>
+                    <input asp-for="Floor" />
+                    <span asp-validation-for="Floor"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>Room Description*</td>
+                <td>
+                    <input asp-for="Description" />
+                    <span asp-validation-for="Description"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>Room Capacity*</td>
+                <td>
+                    <input asp-for="Capacity" />
+                    <span asp-validation-for="Capacity"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>Room Color*</td>
+                <td>
+                    <input type="color" asp-for="Color" />
+                    <span asp-validation-for="Color"></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button class="blue-button" type="submit">Submit</button>
+</form>

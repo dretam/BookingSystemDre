@@ -1,0 +1,56 @@
+﻿@using BookingSystem.DTO.Master.Room
+@model RoomIndexDTO
+
+@section breadCrumbs {
+    <span>Room Index</span>
+}
+
+@{
+    ViewData["Menu"] = "Room";
+    ViewData["Title"] = "Room Index";
+    var columnHead = new string[] { "Action", "Room Name", "Floor", "Description", "Location Office", "Capacity", "Room Color" };
+    var parameters = new
+    {
+        name = ViewBag.Name,
+        floor = ViewBag.Floor,
+        page = ViewBag.Page
+    };
+}
+
+<div class="form-bread-crumb">
+    <span>@ViewData["Menu"]</span>
+</div>
+
+<div class="grid-container">
+    <form class="filter" method="get" asp-controller="Room" asp-action="Index">
+        <input type="text" name="name" placeholder="Room name..." value="@ViewBag.Name" />
+        <button type="submit" class="blue-button"><i class="fas fa-search"></i></button>
+    </form>
+    <a class="blue-button create-button" asp-controller="Room" asp-action="Upsert">Add New</a>
+    <table>
+        <custom-thead columns="@columnHead"></custom-thead>
+        <tbody>
+            @foreach (var row in Model.Grid)
+            {
+                <tr>
+                    <td>
+                        <a class="blue-button" asp-action="Upsert" asp-route-roomId="@row.Id"><i class="far fa-edit"></i></a>
+                        <a class="blue-button delete-button" asp-action="Delete" data-id="@row.Id" asp-route-roomId="@row.Id"><i class="far fa-window-close"></i></a>
+                    </td>
+                    <td>@row.Name</td>
+                    <td>@row.Floor</td>
+                    <td>@row.Description</td>
+                    <td>@row.Location</td>
+                    <td>@row.Capacity</td>
+                    <td>@row.Color</td>
+                </tr>
+            }
+        </tbody>
+        <pagination colspan="@columnHead.Length"
+                    action="Index"
+                    controller="Room"
+                    total-pages="@Model.TotalPages"
+                    parameters="@parameters"
+                    page="@ViewBag.Page"></pagination>
+    </table>
+</div>

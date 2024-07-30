@@ -1,0 +1,45 @@
+﻿@using BookingSystem.DTO.Child.ChildResource
+@model UpdateChildResourceDTO
+
+@section breadCrumbs {
+    <span>Resource Child Update Form</span>
+}
+
+@{
+    ViewData["Menu"] = "Update Resource Child";
+    var columnChildHead = new string[] { "Resource Code", "Master Resource ID", "Status" };
+}
+
+<div class="form-bread-crumb">
+    <span>@ViewData["Menu"]</span>
+</div>
+
+<form method="post" asp-action="UpdateChild" class="upsert-form">
+    <table>
+        <tbody>
+            <tr>
+                <td>Resource Code*</td>
+                <td>
+                    <input readonly asp-for="ResourceCode" />
+                    <span asp-validation-for="ResourceCode"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>Resource Master ID*</td>
+                <td>
+                    <input readonly asp-for="ResourceId" />
+                    <span asp-validation-for="ResourceId"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input class="form-check-input" type="checkbox" id="status" asp-for="Status" value="true" checked />
+                    <label class="form-check-label" for="status">
+                        Status*
+                    </label>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button class="blue-button" type="submit">Submit</button>
+</form>

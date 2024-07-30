@@ -1,0 +1,30 @@
+﻿@using BookingSystem.DTO.Master.LocationDTO
+@model UpdateLocationDTO
+
+@section breadCrumbs {
+    <span>Location Update Form</span>
+}
+
+@{
+    ViewData["Menu"] = "Update Location";
+}
+
+<div class="form-bread-crumb">
+    <span>@ViewData["Menu"]</span>
+</div>
+
+<form method="post" asp-action="Update" class="upsert-form">
+    <table>
+        <tbody>
+            <input type="hidden" asp-for="Id" />
+            <tr>
+                <td>Location Name*</td>
+                <td>
+                    <input asp-for="Name" />
+                    <span asp-validation-for="Name"></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button class="blue-button" type="submit">Submit</button>
+</form>

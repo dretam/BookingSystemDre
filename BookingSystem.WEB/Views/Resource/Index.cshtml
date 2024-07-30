@@ -1,0 +1,54 @@
+﻿@using BookingSystem.DTO.Master.ResourceDTO
+@model ResourceIndexDTO
+
+@section breadCrumbs {
+    <span>Resource Index</span>
+}
+
+@{
+    ViewData["Menu"] = "Resource";
+    ViewData["Title"] = "Resource Index";
+    var columnHead = new string[] { "Action", "Resource Name", "Status", "Icon", "Total Resource Code" };
+    var parameters = new
+    {
+        resourceName = ViewBag.ResourceName,
+        status = ViewBag.Status,
+        page = ViewBag.Page
+    };
+}
+
+<div class="form-bread-crumb">
+    <span>@ViewData["Menu"]</span>
+</div>
+
+<div class="grid-container">
+    <form class="filter" method="get" asp-controller="Resource" asp-action="Index">
+        <input type="text" name="resourceName" placeholder="Resource name..." value="@ViewBag.ResourceName" />
+        <button type="submit" class="blue-button"><i class="fas fa-search"></i></button>
+    </form>
+    <a class="blue-button create-button" asp-controller="Resource" asp-action="Upsert">Add New</a>
+    <table>
+        <custom-thead columns="@columnHead"></custom-thead>
+        <tbody>
+            @foreach (var row in Model.Grid)
+            {
+                <tr>
+                    <td>
+                        <a class="blue-button" asp-action="Upsert" asp-route-resourceId="@row.Id"><i class="far fa-edit"></i></a>
+                        <a class="blue-button delete-button" asp-action="Delete" data-id="@row.ResourceName" asp-route-resourceId="@row.Id"><i class="far fa-window-close"></i></a>
+                    </td>
+                    <td>@row.ResourceName</td>
+                    <td>@row.StringStatus</td>
+                    <td>@row.IconPath</td>
+                    <td>@row.TotalResourceChildren</td>
+                </tr>
+            }
+        </tbody>
+        <pagination colspan="@columnHead.Length"
+                    action="Index"
+                    controller="Resource"
+                    total-pages="@Model.TotalPages"
+                    parameters="@parameters"
+                    page="@ViewBag.Page"></pagination>
+    </table>
+</div>

@@ -1,0 +1,90 @@
+﻿@*using System.Security.Claims;*@
+@*using System.Security.Claims;*@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - BookingSystem</title>
+    <link rel="stylesheet" href="~/css/normalize.css" />
+    <link rel="stylesheet" href="~/css/font-awesome.css" />
+    <link rel="stylesheet" href="~/css/apexcharts.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/authorization.css" />
+    <link rel="stylesheet" href="~/css/responsive.css" />
+    <script src="~/js/jquery-3.6.0.js"></script>
+    <script src="~/js/apexcharts.js"></script>
+    <script src="~/js/site.js" defer></script>
+</head>
+<body class="main-body">
+    @{
+
+        @* alternatif
+        var claims = User.Claims;
+        string? username = claims.SingleOrDefault(clm => clm.Type == "username")?.Value;
+        username = (username == null) ? "anonymous" : username;
+        *@
+
+        @*var claims = User.Claims;*@
+
+        string username = "anonymous";
+        string role = "Guest";
+
+        @*
+            foreach (var claim in claims)
+            {
+                if (claim.Type == "username")
+                {
+                    username = claim.Value;
+                }
+                else if (claim.Type == ClaimTypes.Role)
+                {
+                    role = claim.Value;
+                }
+            }
+        *@
+    }
+
+    @{
+        DateTime dateTime = DateTime.UtcNow;
+        string dateTimeNowString = dateTime.ToLongDateString();
+    }
+    <partial name="_Menu" />
+    <header>
+        <div class="bread-crumbs">
+            @RenderSection(name: "breadCrumbs", required: true)
+        </div>
+        <div class="user-wrapper">
+            <div class="user">
+                <div class="welcome-wrapper">
+                    <div class="welcome">
+                        <span>Welcome,</span>
+                    </div>
+                    <div class="user-detail">
+                        <a asp-action="ChangePassword" asp-controller="Account" asp-route-username="@username">
+                            <span class="full-name">@username</span>
+                        </a> as <span class="role">@role</span>
+                    </div>
+                </div>
+            </div>
+            <div class="calendar">
+                <i class="far fa-calendar-alt"></i>
+                <span class="date-text">@dateTimeNowString</span>
+            </div>
+            <div class="sign-out">
+                <a asp-action="Logout" class="logout-button" asp-controller="Account">
+                    <i class="fas fa-power-off"></i>
+                    <span class="logout">Logout</span>
+                </a>
+            </div>
+        </div>
+    </header>
+    <main>
+        @RenderBody()
+    </main>
+    <partial name="_Footer" />
+    @RenderSection(name: "modalDialog", required: false)
+    @RenderSection(name: "indexScript", required: false)
+</body>
+</html>

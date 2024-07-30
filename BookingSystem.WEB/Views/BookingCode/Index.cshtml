@@ -1,0 +1,83 @@
+﻿@using BookingSystem.DataModel.Master.BookingCodeVM
+@model BCIndexDTO
+
+@section breadCrumbs {
+    <span>Booking Code Index</span>
+}
+
+@{
+    ViewData["Menu"] = "Booking Code";
+    ViewData["Title"] = "Booking Code Index";
+    var columnHead = new string[] { "Action", "Booking Code", "Status" };
+    var parameters = new
+    {
+        bookingCode = ViewBag.BookingCode,
+        status = ViewBag.Status,
+        page = ViewBag.Page
+    };
+}
+
+<div class="form-bread-crumb">
+    <span>@ViewData["Menu"]</span>
+</div>
+
+<div class="grid-container">
+    <form class="filter" method="get" asp-controller="BookingCode" asp-action="Index">
+        <input type="text" name="bookingCode" placeholder="Booking code..." value="@ViewBag.BookingCode" />
+        <button type="submit" class="blue-button"><i class="fas fa-search"></i></button>
+    </form>
+    <a class="blue-button create-button" asp-action="Upsert">Add New</a>
+    <table>
+        <custom-thead columns="@columnHead"></custom-thead>
+        <tbody>
+            @foreach (var row in Model.Grid)
+            {
+                <tr>
+                    <td>
+                        <a class="blue-button" asp-action="Upsert" asp-route-bookingCode="@row.BookingCode"><i class="far fa-edit"></i></a>
+                        <a class="blue-button delete-button" asp-action="Delete" data-id="@row.BookingCode" asp-route-bookingCode="@row.BookingCode"><i class="far fa-window-close"></i></a>
+                    </td>
+                    <td>@row.BookingCode</td>
+                    <td>@row.Status</td>
+                </tr>
+            }
+        </tbody>
+        <pagination colspan="@columnHead.Length"
+                    action="Index"
+                    controller="BookingCode"
+                    total-pages="@Model.TotalPages"
+                    parameters="@parameters"
+                    page="@ViewBag.Page"></pagination>
+    </table>
+</div>
+
+@*
+    <div class="grid-container">
+        <h1 class="text-center">@ViewData["Title"]</h1>
+        <form class="d-flex" role="search" method="get" asp-controller="BookingCode" asp-action="Index">
+            <input class="form-control me-2" type="text" name="bookingCode" placeholder="Search" aria-label="Search" value="@ViewBag.BookingCode">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+        <a class="btn btn-primary mt-2 mb-2 blue-button create-button" asp-action="Upsert">Insert</a>
+        <table class="table table-bordered">
+            <thead>
+                <th>Action</th>
+                <th>Booking Code</th>
+                <th>Status</th>
+            </thead>
+            <tbody>
+                @foreach (var row in Model.Grid)
+                {
+                    <tr>
+                        <td>
+                            <a class="blue-button btn btn-warning" asp-action="Upsert" asp-route-bookingCode="@row.BookingCode">Update</a>
+                            <a class="blue-button delete-button btn btn-danger" asp-action="Delete" data-id="@row.BookingCode" asp-route-bookingCode="@row.BookingCode">Delete</a>
+                        </td>
+                        <td>@row.BookingCode</td>
+                        <td>@row.Status</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+*@

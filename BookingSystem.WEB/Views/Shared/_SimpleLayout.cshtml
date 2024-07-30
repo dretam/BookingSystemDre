@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Booking System</title>
+    <link rel="stylesheet" href="~/css/normalize.css" />
+    <link rel="stylesheet" href="~/css/font-awesome.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/responsive.css" />
+    <script src="~/js/jquery-3.6.0.js"></script>
+    <script src="~/js/site.js"></script>
+</head>
+<body class="authentication-body">
+    <div class="authentication-wrapper">
+        <header class="company-logo">
+            <img src="~/image/logo.png" />
+            <h1>
+                Trade of
+                <span class="bold">kinocorp</span>
+            </h1>
+        </header>
+        <main>
+            @RenderBody()
+        </main>
+    </div>
+    @RenderSection(name: "indexScript", required: false)
+</body>
+</html>

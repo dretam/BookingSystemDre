@@ -1,0 +1,29 @@
+﻿@using BookingSystem.DTO.Master.LocationDTO
+@model InsertLocationDTO
+
+@section breadCrumbs {
+    <span>Location Insert Form</span>
+}
+
+@{
+    ViewData["Menu"] = "Insert Location";
+}
+
+<div class="form-bread-crumb">
+    <span>@ViewData["Menu"]</span>
+</div>
+
+<form method="post" asp-action="Insert" class="upsert-form">
+    <table>
+        <tbody>
+            <tr>
+                <td>Location Name*</td>
+                <td>
+                    <input asp-for="Name" />
+                    <span asp-validation-for="Name"></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button class="blue-button" type="submit">Submit</button>
+</form>

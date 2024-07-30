@@ -1,0 +1,50 @@
+﻿@using BookingSystem.DTO.Master.LocationDTO
+@model LocationIndexDTO
+
+@section breadCrumbs {
+    <span>Location Index</span>
+}
+
+@{
+    ViewData["Menu"] = "Location";
+    ViewData["Title"] = "Location Index";
+    var columnHead = new string[] { "Action", "Location Name" };
+    var parameters = new
+    {
+        name = ViewBag.Name,
+        page = ViewBag.Page
+    };
+}
+
+<div class="form-bread-crumb">
+    <span>@ViewData["Menu"]</span>
+</div>
+
+<div class="grid-container">
+    <form class="filter" method="get" asp-controller="Location" asp-action="Index">
+        <input type="text" name="name" placeholder="Locaiton name..." value="@ViewBag.LocationName" />
+        <button type="submit" class="blue-button"><i class="fas fa-search"></i></button>
+    </form>
+    <a class="blue-button create-button" asp-controller="Location" asp-action="Upsert">Add New</a>
+    <table>
+        <custom-thead columns="@columnHead"></custom-thead>
+        <tbody>
+            @foreach (var row in Model.Grid)
+            {
+                <tr>
+                    <td>
+                        <a class="blue-button" asp-action="Upsert" asp-route-locationId="@row.Id"><i class="far fa-edit"></i></a>
+                        <a class="blue-button delete-button" asp-action="Delete" data-id="@row.Id" asp-route-locationId="@row.Id"><i class="far fa-window-close"></i></a>
+                    </td>
+                    <td>@row.Name</td>
+                </tr>
+            }
+        </tbody>
+        <pagination colspan="@columnHead.Length"
+                    action="Index"
+                    controller="Location"
+                    total-pages="@Model.TotalPages"
+                    parameters="@parameters"
+                    page="@ViewBag.Page"></pagination>
+    </table>
+</div>
