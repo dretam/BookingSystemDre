@@ -1,0 +1,51 @@
+﻿@using BookingSystem.DTO.Master.GlobalSetupDTO
+@model UpdateGSDTO
+
+@section breadCrumbs {
+    <span>Global Setup Update Form</span>
+}
+
+@{
+    ViewData["Menu"] = "Update Global Setup";
+}
+
+<div class="form-bread-crumb">
+    <span>@ViewData["Menu"]</span>
+</div>
+
+<form method="post" asp-action="Update" class="upsert-form">
+    <table>
+        <tbody>
+            <input type="hidden" asp-for="GSID" />
+            <tr>
+                <td>Parameter Code*</td>
+                <td>
+                    <input asp-for="ParameterCode" />
+                    <span asp-validation-for="ParameterCode"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>Parameter Name*</td>
+                <td>
+                    <input asp-for="ParameterName" />
+                    <span asp-validation-for="ParameterName"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>Parameter Description*</td>
+                <td>
+                    <input asp-for="ParameterDesc" />
+                    <span asp-validation-for="ParameterDesc"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>Parameter Value*</td>
+                <td>
+                    <input asp-for="ParameterValue" />
+                    <span asp-validation-for="ParameterValue"></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button class="blue-button" type="submit">Submit</button>
+</form>

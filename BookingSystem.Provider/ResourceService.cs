@@ -284,13 +284,18 @@ namespace BookingSystem.Service
             using (var dbContext = new BookingSystemContext())
             {
                 var query = from chlRes in dbContext.ChlResources
-                            where chlRes.DeletedDate == null && chlRes.Status == true
+                            join trxResRoom in dbContext.TrxMstRoomChlResources on chlRes.ResourceCode equals trxResRoom.ChlResId into gj
+                            from subTrxResRoom in gj.DefaultIfEmpty()
+                            where chlRes.DeletedDate == null 
+                            // && (!roomId.HasValue || subTrxResRoom.MstRoomId == roomId)
                             select new ReturnChlResCheckBoxDTO()
                             {
                                 Value = chlRes.ResourceCode,
                                 Text = chlRes.Resource.ResourceName,
-                                IsChecked = false
+                                IsChecked = chlRes.Status.Value,
+                                ResourceId = chlRes.ResourceId
                             };
+
                 dtoList = query.ToList();
             }
             return dtoList;

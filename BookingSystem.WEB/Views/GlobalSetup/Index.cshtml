@@ -1,0 +1,55 @@
+﻿@using BookingSystem.DTO.Master.GlobalSetupDTO
+@model GSIndexDTO
+
+@section breadCrumbs {
+    <span>Global Setup Index</span>
+}
+
+@{
+    ViewData["Menu"] = "Global Setup";
+    ViewData["Title"] = "Global Setup Index";
+    var columnHead = new string[] { "Action", "Parameter Code", "Parameter Name", "ParameterDesc", "ParameterValue" };
+    var parameters = new
+    {
+        parameterCode = ViewBag.ParameterCode,
+        parameterName = ViewBag.ParameterName,
+        page = ViewBag.Page
+    };
+}
+
+<div class="form-bread-crumb">
+    <span>@ViewData["Menu"]</span>
+</div>
+
+<div class="grid-container">
+    <form class="filter" method="get" asp-controller="GlobalSetup" asp-action="Index">
+        <input type="text" name="parameterCode" placeholder="Parameter code..." value="@ViewBag.ParameterCode" />
+        <input type="text" name="parameterName" placeholder="Parameter name..." value="@ViewBag.ParameterName" />
+        <button type="submit" class="blue-button"><i class="fas fa-search"></i></button>
+    </form>
+    <a class="blue-button create-button" asp-controller="GlobalSetup" asp-action="Upsert">Add New</a>
+    <table>
+        <custom-thead columns="@columnHead"></custom-thead>
+        <tbody>
+            @foreach (var row in Model.Grid)
+            {
+                <tr>
+                    <td>
+                        <a class="blue-button" asp-action="Upsert" asp-route-gsId="@row.GSID"><i class="far fa-edit"></i></a>
+                        <a class="blue-button delete-button" asp-action="Delete" data-id="@row.GSID" asp-route-gsId="@row.GSID"><i class="far fa-window-close"></i></a>
+                    </td>
+                    <td>@row.ParameterCode</td>
+                    <td>@row.ParameterName</td>
+                    <td>@row.ParameterDesc</td>
+                    <td>@row.ParameterValue</td>
+                </tr>
+            }
+        </tbody>
+        <pagination colspan="@columnHead.Length"
+                    action="Index"
+                    controller="GlobalSetup"
+                    total-pages="@Model.TotalPages"
+                    parameters="@parameters"
+                    page="@ViewBag.Page"></pagination>
+    </table>
+</div>

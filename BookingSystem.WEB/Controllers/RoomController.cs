@@ -1,4 +1,5 @@
 ﻿using BookingSystem.DataAccess.Models;
+using BookingSystem.DTO.Child.ChildResource;
 using BookingSystem.DTO.Master.Room;
 using BookingSystem.DTO.Transaction.TrxRoomRes;
 using BookingSystem.Service;
@@ -97,6 +98,13 @@ namespace BookingSystem.WEB.Controllers
                         {
                             trxDto.ChlResCode = item.Value;
                             trxDto.MstRoomId = dto.Id;
+                            var chlResDto = new UpdateChildResourceDTO()
+                            {
+                                ResourceCode = item.Value,
+                                ResourceId = item.ResourceId,
+                                Status = false
+                            };
+                            _resourceService.UpdateChildResource(chlResDto);
                             _trxRoomResService.InsertTrxRoomRes(trxDto);
                         }
                     }

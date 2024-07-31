@@ -9,6 +9,9 @@ builder.Services.AddScoped<BookingCodeService>();
 builder.Services.AddScoped<RoomService>();
 builder.Services.AddScoped<TransactionRoomResService>();
 builder.Services.AddScoped<LocationService>();
+builder.Services.AddScoped<GlobalSetupService>();
+builder.Services.AddScoped<MenuService>();
+builder.Services.AddScoped<RoleService>();
 builder.Services.AddScoped<BookingSystemContext>();
 
 // Add services to the container.
@@ -33,6 +36,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=BookingCode}/{action=Index}/{id?}");
+    pattern: "{controller=GlobalSetup}/{action=Index}/{id?}");
 
 app.Run();

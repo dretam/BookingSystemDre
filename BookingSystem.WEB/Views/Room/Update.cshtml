@@ -49,19 +49,22 @@
                                 {
                                     <tr>
                                         <td>
-                                            @if (Model.returnCheckedResourceList[i].IsChecked == true)
+                                            @if (Model.returnCheckedResourceList[i].IsChecked == false)
                                             {
-                                                <input class="form-check-input" type="checkbox" id="isChecked" asp-for="@(Model.returnCheckedResourceList[i].IsChecked)" value="true" checked />
+                                                <input class="form-check-input" type="checkbox" id="isChecked_@i" asp-for="@(Model.returnCheckedResourceList[i].IsChecked)" value="false" checked />
                                             } else
                                             {
-                                                <input class="form-check-input" type="checkbox" id="isChecked" asp-for="@(Model.returnCheckedResourceList[i].IsChecked)" value="false" />
+                                                <input class="form-check-input" type="checkbox" id="isChecked_@i" asp-for="@(Model.returnCheckedResourceList[i].IsChecked)" value="true" />
                                             }
                                         </td>
                                         <td>
                                             @Model.returnCheckedResourceList[i].Value
+                                            <input type="hidden" asp-for="@(Model.returnCheckedResourceList[i].Value)" />
                                         </td>
                                         <td>
                                             @Model.returnCheckedResourceList[i].Text
+                                            <input type="hidden" asp-for="@(Model.returnCheckedResourceList[i].Text)" />
+                                            <input type="hidden" asp-for="@(Model.returnCheckedResourceList[i].ResourceId)" />
                                         </td>
                                     </tr>
                                 }

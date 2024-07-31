@@ -1,6 +1,7 @@
 ﻿using BookingSystem.DataAccess.Models;
 using BookingSystem.DTO.Master.GlobalSetupDTO;
 using BookingSystem.DTO.Master.MstRoleDTO;
+using BookingSystem.DTO.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,6 +51,24 @@ namespace BookingSystem.Service
             }
 
             return dto;
+        }
+
+        public List<DropdownDTO> GetRoleDropdown()
+        {
+            var roleList = new List<DropdownDTO>();
+            using (var dbContext = new BookingSystemContext())
+            {
+                var query = from mstRole in dbContext.MstRoles
+                            where mstRole.DeletedDate == null
+                            select new DropdownDTO()
+                            {
+                                Value = mstRole.Id,
+                                Text = mstRole.Name
+                            };
+                roleList = query.ToList();
+            }
+
+            return roleList;
         }
 
         public MstRole GetOne(int roleId)

@@ -1,0 +1,29 @@
+﻿@using BookingSystem.DTO.Master.MstRoleDTO
+@model InsertRoleDTO
+
+@section breadCrumbs {
+    <span>Role Insert Form</span>
+}
+
+@{
+    ViewData["Menu"] = "Insert Role";
+}
+
+<div class="form-bread-crumb">
+    <span>@ViewData["Menu"]</span>
+</div>
+
+<form method="post" asp-action="Insert" class="upsert-form">
+    <table>
+        <tbody>
+            <tr>
+                <td>Role*</td>
+                <td>
+                    <input asp-for="Name" />
+                    <span asp-validation-for="Name"></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button class="blue-button" type="submit">Submit</button>
+</form>

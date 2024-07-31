@@ -1,14 +1,14 @@
-﻿@using BookingSystem.DTO.Master.LocationDTO
-@model LocationIndexDTO
+﻿@using BookingSystem.DTO.Master.MstRoleDTO
+@model RoleIndexDTO
 
 @section breadCrumbs {
-    <span>Location Index</span>
+    <span>Role Index</span>
 }
 
 @{
-    ViewData["Menu"] = "Location";
-    ViewData["Title"] = "Location Index";
-    var columnHead = new string[] { "Action", "Location Name" };
+    ViewData["Menu"] = "Role";
+    ViewData["Title"] = "Role Index";
+    var columnHead = new string[] { "Action", "Role" };
     var parameters = new
     {
         name = ViewBag.Name,
@@ -21,11 +21,11 @@
 </div>
 
 <div class="grid-container">
-    <form class="filter" method="get" asp-controller="Location" asp-action="Index">
-        <input type="text" name="name" placeholder="Location name..." value="@ViewBag.LocationName" />
+    <form class="filter" method="get" asp-controller="Role" asp-action="Index">
+        <input type="text" name="name" placeholder="Role name..." value="@ViewBag.Name" />
         <button type="submit" class="blue-button"><i class="fas fa-search"></i></button>
     </form>
-    <a class="blue-button create-button" asp-controller="Location" asp-action="Upsert">Add New</a>
+    <a class="blue-button create-button" asp-controller="Role" asp-action="Upsert">Add New</a>
     <table>
         <custom-thead columns="@columnHead"></custom-thead>
         <tbody>
@@ -33,8 +33,8 @@
             {
                 <tr>
                     <td>
-                        <a class="blue-button" asp-action="Upsert" asp-route-locationId="@row.Id"><i class="far fa-edit"></i></a>
-                        <a class="blue-button delete-button" asp-action="Delete" data-id="@row.Id" asp-route-locationId="@row.Id"><i class="far fa-window-close"></i></a>
+                        <a class="blue-button" asp-action="Upsert" asp-route-roleId="@row.Id"><i class="far fa-edit"></i></a>
+                        <a class="blue-button delete-button" asp-action="Delete" data-id="@row.Id" asp-route-roleId="@row.Id"><i class="far fa-window-close"></i></a>
                     </td>
                     <td>@row.Name</td>
                 </tr>
@@ -42,7 +42,7 @@
         </tbody>
         <pagination colspan="@columnHead.Length"
                     action="Index"
-                    controller="Location"
+                    controller="Role"
                     total-pages="@Model.TotalPages"
                     parameters="@parameters"
                     page="@ViewBag.Page"></pagination>

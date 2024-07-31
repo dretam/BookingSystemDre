@@ -32,7 +32,7 @@ namespace BookingSystem.Service
                             where 
                             (
                                 mstGlobalSetups.ParameterCode.Trim().ToLower().Contains(parameterCode.Trim().ToLower())
-                                || mstGlobalSetups.ParameterName.Trim().ToLower().Contains(parameterName.Trim().ToLower())
+                                && mstGlobalSetups.ParameterName.Trim().ToLower().Contains(parameterName.Trim().ToLower())
                             )
                             && mstGlobalSetups.DeletedDate == null
                             select new GSRowDTO()

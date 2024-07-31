@@ -1,0 +1,46 @@
+﻿@using BookingSystem.DTO.Master.MenuDTO
+@model InsertMenuDTO
+
+@section breadCrumbs {
+    <span>Menu Insert Form</span>
+}
+
+@{
+    ViewData["Menu"] = "Insert Menu";
+}
+
+<div class="form-bread-crumb">
+    <span>@ViewData["Menu"]</span>
+</div>
+
+<form method="post" asp-action="Insert" class="upsert-form">
+    <table>
+        <tbody>
+            <input type="hidden" asp-for="Id" />
+            <tr>
+                <td>Name*</td>
+                <td>
+                    <input asp-for="Name" />
+                    <span asp-validation-for="Name"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>Role*</td>
+                <td>
+                    <select asp-for="RoleId"
+                            asp-items="@(new SelectList(Model.roleList, "Value", "Text"))"></select>
+                    <span asp-validation-for="RoleId"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input class="form-check-input" type="checkbox" id="status" asp-for="Status" value="true" checked />
+                    <label class="form-check-label" for="status">
+                        Status*
+                    </label>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button class="blue-button" type="submit">Submit</button>
+</form>

@@ -1,0 +1,52 @@
+﻿@using BookingSystem.DTO.Master.MenuDTO
+@model MenuIndexDTO
+
+@section breadCrumbs {
+    <span>Menu Index</span>
+}
+
+@{
+    ViewData["Menu"] = "Menu";
+    ViewData["Title"] = "Menu Index";
+    var columnHead = new string[] { "Action", "Name", "Role", "Status" };
+    var parameters = new
+    {
+        name = ViewBag.Name,
+        page = ViewBag.Page
+    };
+}
+
+<div class="form-bread-crumb">
+    <span>@ViewData["Menu"]</span>
+</div>
+
+<div class="grid-container">
+    <form class="filter" method="get" asp-controller="Menu" asp-action="Index">
+        <input type="text" name="name" placeholder="Menu name..." value="@ViewBag.Name" />
+        <button type="submit" class="blue-button"><i class="fas fa-search"></i></button>
+    </form>
+    <a class="blue-button create-button" asp-controller="Menu" asp-action="Upsert">Add New</a>
+    <table>
+        <custom-thead columns="@columnHead"></custom-thead>
+        <tbody>
+            @foreach (var row in Model.Grid)
+            {
+                <tr>
+                    <td>
+                        <a class="blue-button" asp-action="Upsert" asp-route-menuId="@row.Id"><i class="far fa-edit"></i></a>
+                        <a class="blue-button delete-button" asp-action="Delete" data-id="@row.Id" asp-route-menuId="@row.Id"><i class="far fa-window-close"></i></a>
+                    </td>
+                    <td>@row.Name</td>
+                    <td>@row.RoleId</td>
+                    <td>@row.Status</td>
+                </tr>
+            }
+        </tbody>
+        <pagination colspan="@columnHead.Length"
+                    action="Index"
+                    controller="Menu"
+                    total-pages="@Model.TotalPages"
+                    parameters="@parameters"
+                    page="@ViewBag.Page"></pagination>
+    </table>
+</div>

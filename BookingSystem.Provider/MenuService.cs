@@ -1,5 +1,6 @@
 ﻿using BookingSystem.DataAccess.Models;
 using BookingSystem.DTO.Child.ChildMenu;
+using BookingSystem.DTO.Child.ChildResource;
 using BookingSystem.DTO.Master.MenuDTO;
 using BookingSystem.DTO.Master.MstRoleDTO;
 using BookingSystem.DTO.Master.Room;
@@ -148,6 +149,27 @@ namespace BookingSystem.Service
         public ChlMenu GetOneChildMenu(int menuId, int chlMenuId)
         {
             return _context.ChlMenus.SingleOrDefault(a => a.Id == chlMenuId && a.MstMenuId == menuId);
+        }
+
+        public List<InsertChildMenuDTO> GetChildrenMenu(int menuId)
+        {
+            using (var dbContext = new BookingSystemContext())
+            {
+                // Prepare the base query
+                var query = from chlMenus in dbContext.ChlMenus
+                            where chlMenus.MstMenuId == menuId
+                                  && chlMenus.DeletedDate == null
+                            select new InsertChildMenuDTO()
+                            {
+                                MstMenuId = chlMenus.MstMenuId,
+                                Id = chlMenus.Id,
+                                Status = chlMenus.Status.Value,
+                                Name = chlMenus.Name
+                            };
+
+                // Execute the query and return the result
+                return query.ToList();
+            }
         }
 
         public void InsertChlMenu(InsertChildMenuDTO model)

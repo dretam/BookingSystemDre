@@ -11,5 +11,6 @@ namespace BookingSystem.DTO.Utility
         public required string Value { get; set; }
         public required string Text { get; set; }
         public bool IsChecked { get; set; }
+        public int ResourceId { get; set; }
     }
 }

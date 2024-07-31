@@ -1,0 +1,52 @@
+﻿@using BookingSystem.DTO.Child.ChildMenu
+@model UpdateChildMenuDTO
+
+@section breadCrumbs {
+    <span>Menu Child Update Form</span>
+}
+
+@{
+    ViewData["Menu"] = "Update Menu Child";
+    var columnChildHead = new string[] { "Sub Menu ID", "Menu ID", "Sub Menu Name", "Status" };
+}
+
+<div class="form-bread-crumb">
+    <span>@ViewData["Menu"]</span>
+</div>
+
+<form method="post" asp-action="UpdateChild" class="upsert-form">
+    <table>
+        <tbody>
+            <tr>
+                <td>Sub Menu ID*</td>
+                <td>
+                    <input readonly asp-for="Id" />
+                    <span asp-validation-for="Id"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>Menu ID*</td>
+                <td>
+                    <input readonly asp-for="MstMenuId" />
+                    <span asp-validation-for="MstMenuId"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>Sub Menu Name*</td>
+                <td>
+                    <input asp-for="Name" />
+                    <span asp-validation-for="Name"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input class="form-check-input" type="checkbox" id="status" asp-for="Status" value="true" checked />
+                    <label class="form-check-label" for="status">
+                        Status*
+                    </label>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button class="blue-button" type="submit">Submit</button>
+</form>

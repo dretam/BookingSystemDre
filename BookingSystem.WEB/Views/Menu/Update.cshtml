@@ -1,0 +1,82 @@
+﻿@using BookingSystem.DTO.Master.MenuDTO
+@model UpdateMenuDTO
+
+@section breadCrumbs {
+    <span>Menu Update Form</span>
+}
+
+@{
+    ViewData["Menu"] = "Update Menu";
+}
+
+<div class="form-bread-crumb">
+    <span>@ViewData["Menu"]</span>
+</div>
+
+<form method="post" asp-action="Update" class="upsert-form">
+    <table>
+        <tbody>
+            <input type="hidden" asp-for="Id" />
+            <tr>
+                <td>Name*</td>
+                <td>
+                    <input asp-for="Name" />
+                    <span asp-validation-for="Name"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>Role*</td>
+                <td>
+                    <select asp-for="RoleId"
+                            asp-items="@(new SelectList(Model.roleList, "Value", "Text"))"></select>
+                    <span asp-validation-for="RoleId"></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="child-resource-code">
+                    <span>
+                        Sub Menus
+                    </span>
+                </td>
+                <td>
+                    <div class="child-container grid-container">
+                        <a class="blue-button create-button" asp-action="InsertChild" asp-route-menuId="@Model.Id">Add New Sub Menu</a>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Action</th>
+                                    <th>Menu Name</th>
+                                    <th>Sub Menu Name</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var row in Model.subMenuList)
+                                {
+                                    <tr>
+                                        <td>
+                                            <a class="blue-button" asp-action="UpdateChild" asp-route-menuId="@Model.Id" asp-route-chlMenuId="@row.Id"><i class="far fa-edit"></i></a>
+                                            <a class="blue-button delete-button" asp-action="DeleteChild" data-id="@Model.Id" asp-route-menuId="@Model.Id" asp-route-chlMenuId="@row.Id"><i class="far fa-window-close"></i></a>
+                                        </td>
+                                        <td>@Model.Name</td>
+                                        <td>@row.Name</td>
+                                        <td>@row.Status</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input class="form-check-input" type="checkbox" id="status" asp-for="Status" value="true" checked />
+                    <label class="form-check-label" for="status">
+                        Status*
+                    </label>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button class="blue-button" type="submit">Submit</button>
+</form>
